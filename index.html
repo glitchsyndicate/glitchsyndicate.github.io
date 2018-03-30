@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      * { margin:0; padding:0; } /* to remove the top and left whitespace */
+      html, body { width:100%; height:100%; } /* just to be sure these are full screen*/
+      canvas { position: absolute; left: 0; top: 0; display:block; z-index: -1; }
+      .img { width: 75%; height: 75%; max-width: 600px; max-height: 600px; }
+      .flex { display: flex; align-items: center; justify-content: center; height: 100%; }
+    </style>
+  </head>
+</html>
+<body>
+  <canvas id="canvas"></canvas>
+  <div class="flex">
+    <a class="img" href="https://www.facebook.com/glitchsyndicate/"><img src="GSSymbol.svg" alt="Kiwi Standing On Oval"></a>
+  </div>
+  <script>
+    var timer;
+    (function () {
+        var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d');
+
+
+        // resize the canvas to fill browser window dynamically
+        window.addEventListener('resize', resizeCanvas, false);
+        
+        function resizeCanvas() {
+          if(timer) clearTimeout(timer);
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+
+          /**
+           * Your drawings need to be inside this function otherwise they will be reset when 
+           * you resize the browser window and the canvas goes will be cleared.
+           */
+          timer = setInterval(drawStuff, 1);
+          drawStuff();
+        }
+        resizeCanvas();
+
+        function drawStuff() {
+          for (var x = 0; x < canvas.width; x += 8) {
+            for (var y = 0; y < canvas.height; y += 8) {
+              var number = Math.floor(Math.random() * 255);
+              var opacity = 1;
+              context.fillStyle = "rgba(" + number + "," + number + "," + number + "," + opacity + ")";
+              context.fillRect(x, y, 8, 8);
+            }
+          }
+        }
+      })();
+  </script>
+</body>
+</html>
